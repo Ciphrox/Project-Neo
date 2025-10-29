@@ -4,10 +4,11 @@
   "scripts": {
     "start": "bun run src/index.ts",
     "dev": "nodemon src/index.ts",
+    "generate-qr": "tsx src/generateSession.ts --qr",
     "lint": "prettier --write ."
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "^7.0.0-rc.6",
+    "@whiskeysockets/baileys": "7.0.0-rc.5",
     "dotenv": "^17.2.3",
     "mathjs": "^15.0.0",
     "pino": "^10.0.0",

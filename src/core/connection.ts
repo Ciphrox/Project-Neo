@@ -1,4 +1,5 @@
 import makeWASocket, {
+  type AuthenticationCreds,
   DisconnectReason,
   fetchLatestBaileysVersion,
   useMultiFileAuthState,
@@ -8,10 +9,42 @@ import { pino } from "pino";
 import qrcode from "qrcode-terminal";
 import config from "@core/config";
 
+import dotenv from "dotenv";
+dotenv.config();
+
+import fs from "fs";
+import path from "path";
+import { packSession, unpackSession } from "./utils";
+
+function updateCredsFromEnv() {
+  const sessionString = config.NEO_SESSION;
+  const envCreds = unpackSession(sessionString);
+
+  const dir = path.resolve(config.sessions.path);
+  const file = path.join(dir, "creds.json");
+
+  if (!dir || !fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+
+  if (!file || !fs.existsSync(file)) {
+    fs.writeFileSync(file, JSON.stringify({}), "utf-8");
+  }
+
+  fs.writeFileSync(file, JSON.stringify(envCreds, null, 2), "utf-8");
+}
+
+function updateEnvCreds(creds: AuthenticationCreds) {
+  const NEO_SESSION = packSession(creds);
+  process.env.NEO_SESSION = NEO_SESSION;
+}
+
 export async function createSocket(): Promise<WASocket> {
+  updateCredsFromEnv();
   const { state, saveCreds } = await useMultiFileAuthState(
     config.sessions.path,
   );
+
   const { version } = await fetchLatestBaileysVersion();
   const logger = pino({
     level: config.logger.level,
@@ -42,11 +75,16 @@ export async function createSocket(): Promise<WASocket> {
     maxMsgRetryCount: config.socket.maxMsgRetryCount,
     fireInitQueries: config.socket.fireInitQueries,
     shouldSyncHistoryMessage: () => false,
+
     shouldIgnoreJid: (jid) => jid === "status@broadcast",
     getMessage: async () => ({}) as any,
   });
 
-  sock.ev.on("creds.update", saveCreds);
+  sock.ev.on("creds.update", () => {
+    saveCreds();
+    console.log("Credentials updated, updating environment variable...");
+    updateEnvCreds(state.creds);
+  });
 
   return sock;
 }
