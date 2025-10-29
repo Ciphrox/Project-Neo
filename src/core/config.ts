@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const envConfig = {
+  NEO_SESSION: process.env.NEO_SESSION,
   TRIGGERS: process.env.TRIGGERS || "!",
   SUDO: process.env.SUDO?.split(",") || [],
   PREFIX: process.env.DEFAULT_PREFIX || ".",
@@ -10,6 +11,10 @@ const envConfig = {
   ENVIRONMENT: process.env.ENVIRONMENT.toUpperCase() || "PROD",
   ACCESS_MODE: process.env.ACCESS_MODE.toUpperCase() || "PRIVATE",
 };
+
+if (!envConfig.NEO_SESSION) {
+  throw new Error("NEO_SESSION is not defined in environment variables.");
+}
 
 const config = {
   ...envConfig,

@@ -14,7 +14,6 @@ const ping: Command = {
     examples: ["{tr}ping"],
   },
   fromMe: true,
-  // onlyPm: true,
   run: async (ctx) => {
     const t1 = Date.now();
     await ctx.client.sendMessage(ctx.jid, {

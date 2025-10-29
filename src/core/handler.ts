@@ -79,7 +79,6 @@ export async function handleMessage(waContext: WASocket, m: WAMessage) {
 
   const lower = text.toLowerCase();
 
-  // console.log(`Received message: ${text} from ${jid}`);
   for (const cmd of commands) {
     const match = lower.match(cmd.regexPattern!);
     if (!match) continue;
