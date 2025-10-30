@@ -75,7 +75,6 @@ export async function createSocket(): Promise<WASocket> {
     maxMsgRetryCount: config.socket.maxMsgRetryCount,
     fireInitQueries: config.socket.fireInitQueries,
     shouldSyncHistoryMessage: () => false,
-
     shouldIgnoreJid: (jid) => jid === "status@broadcast",
     getMessage: async () => ({}) as any,
   });

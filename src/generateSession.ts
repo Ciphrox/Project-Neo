@@ -9,6 +9,7 @@ import qrcode from "qrcode-terminal";
 import config from "@core/config";
 import { packSession } from "./core/utils";
 import pino from "pino";
+import fs from "fs";
 
 const args = process.argv.slice(2);
 const wantQR = args.includes("--qr");
@@ -89,13 +90,22 @@ async function generateSession() {
         generateSession();
       } else {
         console.log(`❌ Connection closed — reason: ${statusCode} `);
-        process.exit(0);
+        await delay(5000);
+        // process.exit(0);
       }
     } else if (connection === "open") {
-      const NEO_SESSION = packSession(sock.authState);
+      console.log("✅ Connected successfully!");
+
+      const creds = JSON.parse(
+        fs.readFileSync(`${config.sessions.path}/creds.json`, "utf-8"),
+      );
+
+      const NEO_SESSION = packSession(creds);
+
       console.log("\n----- COPY BELOW SESSION STRING -----\n");
       console.log(NEO_SESSION);
       console.log("----- COPY ABOVE SESSION STRING -----\n");
+
       const myJid = sock.user!.id.replace(/:[^@]*/g, "");
       await sock.sendMessage(myJid, {
         text: "✅ NEO Session generated! Please Don't share your session.\n Your NEO session string is:",
@@ -107,7 +117,9 @@ async function generateSession() {
       process.exit(0);
     }
   });
-  sock.ev.on("creds.update", saveCreds);
+  sock.ev.on("creds.update", async () => {
+    saveCreds();
+  });
 }
 
 generateSession();
