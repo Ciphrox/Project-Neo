@@ -1,7 +1,7 @@
 import NEO from "@/core/Neo";
 import type { Command } from "@core/types";
 
-const plugin_category = "utility";
+const plugin_category = "info";
 
 const ping: Command = {
   name: "ping",
