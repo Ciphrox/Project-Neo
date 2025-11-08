@@ -28,7 +28,8 @@ export async function start() {
 
   loadPlugins();
 
-  sock.ev.on("messages.upsert", ({ messages }) => {
+  sock.ev.on("messages.upsert", ({ messages, type }) => {
+    if (type !== "notify") return;
     messages.forEach((m) => {
       handleMessage(sock, m);
     });

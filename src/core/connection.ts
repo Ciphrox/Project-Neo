@@ -81,7 +81,6 @@ export async function createSocket(): Promise<WASocket> {
 
   sock.ev.on("creds.update", () => {
     saveCreds();
-    console.log("Credentials updated, updating environment variable...");
     updateEnvCreds(state.creds);
   });
 

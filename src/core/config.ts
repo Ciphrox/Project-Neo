@@ -5,11 +5,13 @@ dotenv.config();
 const envConfig = {
   NEO_SESSION: process.env.NEO_SESSION,
   TRIGGERS: process.env.TRIGGERS || "!",
-  SUDO: process.env.SUDO?.split(",") || [],
   PREFIX: process.env.DEFAULT_PREFIX || ".",
   BOT_NAME: process.env.BOT_NAME || "Neo",
-  ENVIRONMENT: process.env.ENVIRONMENT.toUpperCase() || "PROD",
-  ACCESS_MODE: process.env.ACCESS_MODE.toUpperCase() || "PRIVATE",
+  ENVIRONMENT: process.env.ENVIRONMENT?.toUpperCase() || "PROD",
+  ACCESS_MODE: process.env.ACCESS_MODE?.toUpperCase() || "PRIVATE",
+  ALLOW_NSFW: process.env.ALLOW_NSFW?.toLowerCase() === "true" || false,
+  ENABLE_LOGS: process.env.ENABLE_LOGS?.toLowerCase() === "true" || false,
+  SUDO: process.env.SUDO?.split(",") || [],
 };
 
 if (!envConfig.NEO_SESSION) {

@@ -1,6 +1,7 @@
-import type { WAMessage, WASocket, proto } from "@whiskeysockets/baileys";
+import type { WAMessage, WASocket } from "@whiskeysockets/baileys";
 
-type Message = keyof proto.IMessage | undefined;
+export type Message = WAMessage["message"];
+export type MessageType = keyof Message;
 
 export type NeoContext = {
   client: WASocket;
@@ -12,8 +13,7 @@ export type NeoContext = {
   isOwner: boolean;
   text: string;
   message: WAMessage;
-  messageType: Message;
-  quoted?: WAMessage;
+  messageType: MessageType;
   match: RegExpMatchArray | null;
 };
 
@@ -35,8 +35,9 @@ type OptionalCommandOptions = {
   allowPublic: boolean;
   allowSudo: boolean;
   disable: boolean;
-  onType: Message;
+  onType: MessageType;
   showInCommandList: boolean;
+  isNSFW: boolean;
 } & sudoCommandOptions;
 
 export const DEFAULT_COMMAND_OPTIONS: OptionalCommandOptions = {
@@ -51,6 +52,7 @@ export const DEFAULT_COMMAND_OPTIONS: OptionalCommandOptions = {
   disable: false,
   onType: undefined,
   showInCommandList: true,
+  isNSFW: false,
 };
 
 type CommandOptions = RequiredCommandOptions & Partial<OptionalCommandOptions>;

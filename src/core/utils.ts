@@ -14,3 +14,7 @@ export function makeJid(id: string): { jid: string; error: Error | null } {
   if (id.length === 16) return { jid: `${id}@c.us`, error: null };
   return { jid: "", error: new Error("Invalid ID") };
 }
+
+export function randInt(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

@@ -1,35 +1,36 @@
 import { WASocket, WAMessage, getContentType } from "@whiskeysockets/baileys";
+import chalk from "chalk";
 import config from "@core/config";
-import { commands } from "@core/Neo";
+import NEO from "@core/Neo";
 
 import type { Command, NeoContext } from "@core/types";
 
 const checkIsMessageFromOwner = (m: WAMessage): boolean => {
   const jid = m.key.remoteJid!;
-  const isMessageFromGroup = jid.endsWith("@g.us");
+  const isMessageFromGroup = jid?.endsWith("@g.us");
 
   const senderNumber =
     isMessageFromGroup && !m.key.fromMe
-      ? m.key.participant?.split("@")[0]
-      : jid.split("@")[0];
+      ? m.key.participantAlt?.split("@")[0]
+      : jid?.split("@")[0];
   return m.key.fromMe || config.SUDO.includes(senderNumber) || false;
 };
 
 const handleMessageText = (m: WAMessage): string => {
   const messageType = getContentType(m.message!);
-  let text = "";
-  if (messageType === "conversation") {
-    text = m.message!.conversation;
-  } else if (messageType === "extendedTextMessage") {
-    text = m.message!.extendedTextMessage!.text;
-  } else if (messageType === "imageMessage") {
-    text = m.message!.imageMessage!.caption;
-  } else if (messageType === "videoMessage") {
-    text = m.message!.videoMessage!.caption;
-  } else if (messageType === "documentMessage") {
-    text = m.message!.documentMessage!.caption;
+  switch (messageType) {
+    case "conversation":
+      return m.message!.conversation || "";
+    case "extendedTextMessage":
+      return m.message!.extendedTextMessage!.text || "";
+    case "imageMessage":
+      return m.message!.imageMessage!.caption || "";
+    case "videoMessage":
+      return m.message!.videoMessage!.caption || "";
+    case "documentMessage":
+      return m.message!.documentMessage!.caption || "";
   }
-  return text || "";
+  return "";
 };
 
 export function canRun(
@@ -37,7 +38,7 @@ export function canRun(
   ctx: Pick<
     NeoContext,
     "fromMe" | "fromOthers" | "isOwner" | "isGroup" | "messageType"
-  >,
+  >
 ): boolean {
   if (cmd.disable) return false;
 
@@ -65,6 +66,43 @@ export function canRun(
   return false;
 }
 
+function logMessages(
+  jid: string,
+  isMessageFromMe: boolean,
+  isMessageFromOwner: boolean,
+  isMessageFromGroup: boolean,
+  messageType: string,
+  text?: string
+) {
+  const chatType = isMessageFromGroup ? "👥 GROUP" : "💬 PRIVATE";
+  const senderType = isMessageFromMe
+    ? "📤 ME"
+    : isMessageFromOwner
+      ? "👑 OWNER"
+      : "📥 OTHER";
+
+  const getChatColor = () => {
+    if (isMessageFromGroup) return chalk.cyan;
+    if (isMessageFromMe) return chalk.green;
+    if (isMessageFromOwner) return chalk.yellow;
+    return chalk.magenta;
+  };
+
+  const chatColor = getChatColor();
+
+  console.log(`\n${chalk.bold("=".repeat(60))}`);
+  console.log(
+    `${chatColor.bold(chatType)} ${chalk.dim("|")} ${senderType} ${chalk.dim("|")} ${chalk.dim(`Type: ${messageType}`)}`
+  );
+  console.log(`${chalk.dim("From:")} ${chatColor(jid)}`);
+  if (text) {
+    console.log(
+      `${chalk.dim("Message:")} ${chalk.bold(text.substring(0, 100))}${text.length > 100 ? "..." : ""}`
+    );
+  }
+  console.log(`${chalk.bold("=".repeat(60))}\n`);
+}
+
 /* Message Handler */
 export async function handleMessage(waContext: WASocket, m: WAMessage) {
   const jid = m.key.remoteJid!;
@@ -75,12 +113,8 @@ export async function handleMessage(waContext: WASocket, m: WAMessage) {
   const text = handleMessageText(m);
   const messageType = getContentType(m.message!);
 
-  console.log("text:", text);
-
-  const lower = text.toLowerCase();
-
-  for (const cmd of commands) {
-    const match = lower.match(cmd.regexPattern!);
+  for (const cmd of NEO.getCommands()) {
+    const match = text.match(cmd.regexPattern!);
     if (!match) continue;
 
     if (
@@ -93,6 +127,17 @@ export async function handleMessage(waContext: WASocket, m: WAMessage) {
       })
     )
       continue;
+
+    if (config.ENABLE_LOGS) {
+      logMessages(
+        jid,
+        isMessageFromMe,
+        isMessageFromOwner,
+        isMessageFromGroup,
+        messageType,
+        text
+      );
+    }
 
     waContext.readMessages([m.key]);
     const ctx: NeoContext = {
