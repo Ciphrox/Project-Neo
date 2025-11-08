@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@whiskeysockets/baileys": "7.0.0-rc.5",
+    "chalk": "^5.6.2",
     "dotenv": "^17.2.3",
     "mathjs": "^15.0.0",
     "pino": "^10.0.0",
