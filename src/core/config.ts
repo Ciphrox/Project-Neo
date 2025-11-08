@@ -12,6 +12,9 @@ const envConfig = {
   ALLOW_NSFW: process.env.ALLOW_NSFW?.toLowerCase() === "true" || false,
   ENABLE_LOGS: process.env.ENABLE_LOGS?.toLowerCase() === "true" || false,
   SUDO: process.env.SUDO?.split(",") || [],
+
+  // API KEYS
+  OLLAMA_API_KEY: process.env.OLLAMA_API_KEY || "",
 };
 
 if (!envConfig.NEO_SESSION) {
