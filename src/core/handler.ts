@@ -3,7 +3,7 @@ import chalk from "chalk";
 import config from "@core/config";
 import NEO from "@core/Neo";
 
-import type { Command, NeoContext } from "@core/types";
+import type { Command, NeoContext, QuotedMessage } from "@core/types";
 
 const checkIsMessageFromOwner = (m: WAMessage): boolean => {
   const jid = m.key.remoteJid!;
@@ -45,6 +45,11 @@ export function canRun(
   const isPublic = config.ACCESS_MODE === "PUBLIC";
   const allowedForOthers = isPublic && cmd.allowPublic;
 
+  /* Chat-type/Media Gates */
+  if (cmd.onlyGroup && !ctx.isGroup) return false;
+  if (cmd.onlyPm && ctx.isGroup) return false;
+  if (cmd.onType && cmd.onType !== ctx.messageType) return false;
+
   /* Sudo Gates */
   if (cmd.onlySudo) {
     return ctx.isOwner;
@@ -64,6 +69,23 @@ export function canRun(
   if (ctx.fromOthers && allowedForOthers) return true;
 
   return false;
+}
+
+function createQuoted(m: WAMessage): QuotedMessage | undefined {
+  const jid = m.message?.extendedTextMessage?.contextInfo?.stanzaId;
+  const quotedMessage =
+    m.message?.extendedTextMessage?.contextInfo?.quotedMessage;
+  if (!m || !jid) return undefined;
+
+  return {
+    jid,
+    type: m.message?.extendedTextMessage?.contextInfo?.quotedMessage
+      ? getContentType(
+          m.message?.extendedTextMessage?.contextInfo?.quotedMessage
+        )
+      : undefined,
+    message: quotedMessage,
+  };
 }
 
 function logMessages(
@@ -112,6 +134,7 @@ export async function handleMessage(waContext: WASocket, m: WAMessage) {
   const isMessageFromOwner = checkIsMessageFromOwner(m);
   const text = handleMessageText(m);
   const messageType = getContentType(m.message!);
+  const quoted = createQuoted(m);
 
   for (const cmd of NEO.getCommands()) {
     const match = text.match(cmd.regexPattern!);
@@ -150,10 +173,18 @@ export async function handleMessage(waContext: WASocket, m: WAMessage) {
       text,
       message: m,
       messageType,
+      quoted,
       match,
     };
 
-    await cmd.run(ctx);
+    try {
+      await cmd.run(ctx);
+    } catch (error) {
+      console.error("Error running command:", error);
+      await waContext.sendMessage(jid, {
+        text: "An error occurred while executing the command.",
+      });
+    }
 
     if (m.key.fromMe && cmd.deleteCommand) {
       await waContext.sendMessage(jid, {
