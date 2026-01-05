@@ -1,7 +1,14 @@
 import type { WAMessage, WASocket } from "@whiskeysockets/baileys";
 
+export type { WAMessage }
 export type Message = WAMessage["message"];
 export type MessageType = keyof Message;
+
+export type QuotedMessage = {
+  jid: string;
+  type: MessageType;
+  message: Message;
+};
 
 export type NeoContext = {
   client: WASocket;
@@ -14,6 +21,7 @@ export type NeoContext = {
   text: string;
   message: WAMessage;
   messageType: MessageType;
+  quoted: QuotedMessage | undefined;
   match: RegExpMatchArray | null;
 };
 
