@@ -2,7 +2,8 @@
   {
     "modelName": "gemini-3-flash-preview:cloud",
     "commandName": "gemini",
-    "commands": ["gemini"]
+    "commands": ["gemini"],
+    "imageSupport": true
   },
   {
     "modelName": "minimax-m2.1:cloud",

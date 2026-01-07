@@ -1,11 +1,13 @@
 import NEO from "@/core/Neo";
-import type { Command } from "@/core/types";
-const plugin_category = "ai";
-import { Ollama } from "ollama";
+import type { Command, WAMessage } from "@/core/types";
+import { downloadMediaMessage } from "@whiskeysockets/baileys";
 import { randInt } from "@/core/utils";
 import config from "@/core/config";
 
+import { Ollama } from "ollama";
 import models from "./models.json";
+
+const plugin_category = "ai";
 
 const ollama = new Ollama({
   host: "https://ollama.com",
@@ -43,7 +45,38 @@ for (const model of models) {
           );
         }
 
+        const quotedImage = ctx.quoted?.message?.imageMessage;
+        const quotedText = ctx.quoted?.message?.conversation;
+
+        if (!model.imageSupport && quotedImage) {
+          await ctx.client.sendMessage(
+            ctx.jid,
+            {
+              text: "This model does not support image inputs.",
+            },
+            { quoted: ctx.message }
+          );
+          return;
+        }
+
+        let images: string[] = [];
+        if (quotedImage) {
+          const messageStub: WAMessage = {
+            key: {
+              remoteJid: ctx.jid,
+              id: ctx.quoted.jid,
+            },
+            message: ctx.quoted.message,
+          };
+          const buffer = await downloadMediaMessage(messageStub, "buffer", {});
+          const base64 = buffer.toString("base64");
+          images = [base64];
+        }
+
         const query = ctx.match?.[1];
+        const queryContent = quotedText
+          ? `Replied message: ${quotedText}\n\nQuery: ${query}`
+          : query;
 
         const response = await ollama.chat({
           model: model.modelName,
@@ -52,7 +85,11 @@ for (const model of models) {
               role: "SYSTEM",
               content: model.SYSTEM_PROMPT || "",
             },
-            { role: "user", content: query },
+            {
+              role: "user",
+              content: queryContent,
+              images,
+            },
           ],
           stream: true,
         });
