@@ -13,6 +13,8 @@ const envConfig = {
   ENABLE_LOGS: process.env.ENABLE_LOGS?.toLowerCase() === "true" || false,
   SUDO: process.env.SUDO?.split(",") || [],
 
+  STORAGE_PATH: process.env.STORAGE_PATH || "/data/",
+
   // API KEYS
   OLLAMA_API_KEY: process.env.OLLAMA_API_KEY || "",
 };

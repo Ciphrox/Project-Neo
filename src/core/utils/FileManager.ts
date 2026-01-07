@@ -1,8 +1,9 @@
 import fs from "fs";
 import path from "path";
+import config from "@core/config";
 
 export class FileManager {
-  static outerDirName = "tmp";
+  static outerDirName = config.STORAGE_PATH;
   static dirName = `${FileManager.outerDirName}/tmp_files`;
 
   static dir = path.join(process.cwd(), FileManager.dirName);
