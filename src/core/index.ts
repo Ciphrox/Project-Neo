@@ -7,6 +7,7 @@ import {
   handleDisconnection,
   handleConnection,
 } from "@core/connection.js";
+import { saveMessage } from "@/services/database";
 
 export async function start() {
   console.log(`Neo is starting...`);
@@ -29,8 +30,13 @@ export async function start() {
   loadPlugins();
 
   sock.ev.on("messages.upsert", ({ messages, type }) => {
-    if (type !== "notify") return;
     messages.forEach((m) => {
+      const text =
+        m.message?.conversation || m.message?.extendedTextMessage?.text || "";
+
+      if (text) saveMessage(m, text, sock.user?.id);
+      if (type !== "notify") return;
+      
       handleMessage(sock, m);
     });
   });
