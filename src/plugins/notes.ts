@@ -22,29 +22,37 @@ const set: Command = {
   run: async (ctx) => {
     const key = ctx.match?.[1];
     const isImage = !!ctx.quoted?.message.imageMessage;
+    const isText = !!ctx.quoted?.message.conversation;
 
-    if (!ctx.quoted || !isImage) {
+    if (!ctx.quoted || (!isImage && !isText)) {
       await ctx.client.sendMessage(ctx.jid, {
-        text: "Please reply to an image to set a note.",
+        text: "Please reply to a text or image message to save as a note.",
       });
       return;
     }
 
-    const messageStub: WAMessage = {
-      key: {
-        remoteJid: ctx.jid,
-        id: ctx.quoted.jid,
-      },
-      message: ctx.quoted.message,
-    };
+    if (isImage) {
+      const messageStub: WAMessage = {
+        key: {
+          remoteJid: ctx.jid,
+          id: ctx.quoted.jid,
+        },
+        message: ctx.quoted.message,
+      };
 
-    const chatId = ctx.jid;
+      const chatId = ctx.jid;
 
-    const noteName = `${chatId}_note_${key}.jpg`;
+      const noteName = `${chatId}_note_${key}.jpg`;
 
-    const noteFile = NoteStorage.createFile(noteName);
-    const buffer = await downloadMediaMessage(messageStub, "buffer", {});
-    noteFile.writeFile(buffer);
+      const noteFile = NoteStorage.createFile(noteName);
+      const buffer = await downloadMediaMessage(messageStub, "buffer", {});
+      noteFile.writeFile(buffer);
+    } else if (isText) {
+      const chatId = ctx.jid;
+      const noteName = `${chatId}_note_${key}.txt`;
+      const noteFile = NoteStorage.createFile(noteName);
+      noteFile.writeFile(ctx.quoted.message.conversation || "");
+    }
 
     await ctx.client.sendMessage(ctx.jid, {
       text: `Note saved with key: ${key}`,
@@ -67,18 +75,31 @@ const get: Command = {
     const key = ctx.match?.[1];
     const chatId = ctx.jid;
 
-    const noteName = `${chatId}_note_${key}.jpg`;
-    console.log("Looking for note:", noteName);
+    const imgNoteName = `${chatId}_note_${key}.jpg`;
+    const noteName = `${chatId}_note_${key}.txt`;
 
-    if (!NoteStorage.fileExists(noteName)) {
+    if (
+      !NoteStorage.fileExists(imgNoteName) &&
+      !NoteStorage.fileExists(noteName)
+    ) {
       await ctx.client.sendMessage(ctx.jid, {
         text: `No note found for key: ${key}`,
       });
       return;
     }
 
+    if (NoteStorage.fileExists(noteName)) {
+      const noteContent = fs.readFileSync(NoteStorage.dir + "/" + noteName, {
+        encoding: "utf-8",
+      });
+      await ctx.client.sendMessage(ctx.jid, {
+        text: `Note for key: ${key}\n\n${noteContent}`,
+      });
+      return;
+    }
+
     await ctx.client.sendMessage(ctx.jid, {
-      image: { url: NoteStorage.dir + "/" + noteName },
+      image: { url: NoteStorage.dir + "/" + imgNoteName },
       caption: `Note for key: ${key}`,
     });
   },
@@ -99,17 +120,24 @@ const del: Command = {
     const key = ctx.match?.[1];
     const chatId = ctx.jid;
 
-    const noteName = `${chatId}_note_${key}.jpg`;
-    console.log("Looking to delete note:", noteName);
+    const imageNoteName = `${chatId}_note_${key}.jpg`;
+    const txtNoteName = `${chatId}_note_${key}.txt`;
+    console.log("Looking to delete note:", txtNoteName);
 
-    if (!NoteStorage.fileExists(noteName)) {
+    if (
+      !NoteStorage.fileExists(txtNoteName) &&
+      !NoteStorage.fileExists(imageNoteName)
+    ) {
       await ctx.client.sendMessage(ctx.jid, {
         text: `No note found for key: ${key}`,
       });
       return;
     }
 
-    NoteStorage.cleanupFiles([NoteStorage.createFile(noteName)]);
+    NoteStorage.cleanupFiles([
+      NoteStorage.createFile(txtNoteName),
+      NoteStorage.createFile(imageNoteName),
+    ]);
 
     await ctx.client.sendMessage(ctx.jid, {
       text: `Note deleted for key: ${key}`,
