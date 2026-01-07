@@ -21,7 +21,7 @@ for (const model of models) {
     const cmd: Command = {
       name: model.commandName,
       category: plugin_category,
-      pattern: `(?:${model.commands.join("|")})\\s+([\S\s]*)$`,
+      pattern: `(?:${model.commands.join("|")})\\s+([\\S\\s]*)$`,
       fromMe: true,
       info: {
         header: `${model.commands[0]} AI`,
