@@ -1,6 +1,6 @@
 import NEO from "@/core/Neo";
 import type { Command, WAMessage } from "@/core/types";
-import { FileManager as NoteStorage } from "@/core/utlis";
+import { FileManager as NoteStorage } from "@/core/utils";
 import { downloadMediaMessage } from "@whiskeysockets/baileys";
 
 import fs from "fs";

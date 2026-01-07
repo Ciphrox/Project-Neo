@@ -25,7 +25,7 @@ function padAround(text: string, totalLength: number, hline: string): string {
 const help: Command = {
   name: "help",
   category: plugin_category,
-  pattern: "help(?:\\s+(-[pc])\\s+(.*))?$",
+  pattern: "help(?:\\s+(-[pc]{1,2})\\s+(.*))?$",
   info: {
     header: "Help Command",
     description: "Provides a list of available commands and their usage.",
@@ -33,8 +33,14 @@ const help: Command = {
       "{tr}help",
       "{tr}help -p <pluginName>",
       "{tr}help -c <commandName>",
+      "{tr}help -pc <pluginCategory>",
     ],
-    examples: ["{tr}help", "{tr}help -p tagall", "{tr}help -c ping"],
+    examples: [
+      "{tr}help",
+      "{tr}help -p tagall",
+      "{tr}help -c ping",
+      "{tr}help -pc ai",
+    ],
   },
   fromMe: true,
   run: async (ctx) => {
@@ -45,6 +51,30 @@ const help: Command = {
     if (flag && name) {
       if (flag === "-p") {
         const text = "To be implemented.";
+        await ctx.client.sendMessage(ctx.jid, {
+          text,
+        });
+      } else if (flag === "-pc") {
+        const commands = NEO.getCommands().filter(
+          (cmd) => cmd.category.toLowerCase() === name.toLowerCase()
+        );
+        if (commands.length === 0) {
+          await ctx.client.sendMessage(ctx.jid, {
+            text: `╭${hline.repeat(padLength)}╮\n│ _No commands found for category "${name}"._\n╰${hline.repeat(padLength)}╯`,
+          });
+          return;
+        }
+        let text = `╭${padAround(` *${name[0].toUpperCase() + name.slice(1)}* Commands `, padLength, hlineBold)}╮\n`;
+        for (const cmd of commands) {
+          const cmdName =
+            cmd.pattern === undefined
+              ? cmd.name
+              : `${config.PREFIX}${cmd.name}`;
+          const cmdInfo = cmd.info.header || cmd.info.description;
+          text += `│  ▸ ${"\`" + cmdName + "\`".padEnd(15)} _${cmdInfo}_\n`;
+        }
+        text += `╰${padAround(` *Total Commands: ${commands.length}* `, padLength, hline)}╯`;
+
         await ctx.client.sendMessage(ctx.jid, {
           text,
         });

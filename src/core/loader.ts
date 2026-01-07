@@ -7,10 +7,10 @@ export const loadPlugins = () => {
   const plugDir = join(currentDir, "../plugins");
   // const externalPlugDir = join(currentDir, process.env.PLUGINS_DIR || "/external_plugins");
 
-  readdirSync(plugDir)
-    .filter((f) => f.endsWith(".ts"))
+  readdirSync(plugDir, { recursive: true })
+    .filter((f) => (f as string).endsWith(".ts"))
     .forEach(async (f) => {
-      await import(pathToFileURL(join(plugDir, f)).href);
+      await import(pathToFileURL(join(plugDir, f as string)).href);
       console.log(`\x1b[32mLoaded plugin:\x1b[0m \x1b[36m${f}\x1b[0m`);
     });
 
