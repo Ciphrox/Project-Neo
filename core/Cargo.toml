@@ -1,0 +1,13 @@
+[package]
+name = "project-neo"
+version = "0.1.0"
+edition = "2024"
+description = "A WhatsApp bot written in Rust"
+
+[[bin]]
+name = "project-neo"
+path = "src/main.rs"
+
+[dependencies]
+neo-sdk = { path = "../neo-sdk" }
+plugins = { path = "../plugins" }

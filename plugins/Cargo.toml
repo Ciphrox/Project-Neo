@@ -1,0 +1,10 @@
+[package]
+name = "plugins"
+version = "0.1.0"
+edition = "2024"
+description = "Links all plugin crates and exposes register_all"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
