@@ -1,3 +1,4 @@
+use neo_sdk::ConfigStore;
 use qrcode::render::unicode::Dense1x2;
 use std::sync::Arc;
 use tracing::{error, info, warn};
@@ -8,7 +9,7 @@ use wacore_binary::jid::JidExt;
 use whatsapp_rust::Client;
 use whatsapp_rust::waproto::whatsapp as wa;
 
-pub async fn on_event(event: Arc<Event>, _client: Arc<Client>) {
+pub async fn on_event(event: Arc<Event>, _client: Arc<Client>, store: &Arc<ConfigStore>) {
     match event.as_ref() {
         Event::Connected(_) => info!("Connected to WhatsApp"),
         Event::Disconnected(_) => warn!("Disconnected, reconnecting..."),
@@ -31,14 +32,17 @@ pub async fn on_event(event: Arc<Event>, _client: Arc<Client>) {
         Event::PairSuccess(info) => info!("Pairing successful: {:?}", info),
         Event::Messages(batch) => {
             for incoming in batch.messages.iter() {
-                on_message(&incoming.message, &incoming.info);
+                on_message(&incoming.message, &incoming.info, store);
             }
         }
         _ => {}
     }
 }
 
-fn on_message(msg: &Arc<wa::Message>, info: &MessageInfo) {
+fn on_message(msg: &Arc<wa::Message>, info: &MessageInfo, store: &Arc<ConfigStore>) {
+    if !store.snapshot().enable_logs {
+        return;
+    }
     let Some(text) = text_content(msg) else {
         return;
     };

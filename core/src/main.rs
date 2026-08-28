@@ -1,7 +1,9 @@
 mod handler;
 
-use tracing_subscriber::EnvFilter;
+use neo_sdk::ConfigStore;
+use std::sync::Arc;
 
+use tracing_subscriber::EnvFilter;
 use whatsapp_rust::TokioRuntime;
 use whatsapp_rust::bot::Bot;
 use whatsapp_rust::store::SqliteStore;
@@ -16,13 +18,20 @@ async fn main() -> anyhow::Result<()> {
         )
         .init();
 
+    let store = Arc::new(ConfigStore::load()?);
+    let config = store.snapshot();
+
+    tracing::info!("Starting {}", config.bot_name);
     let bot = Bot::builder()
-        .with_backend(SqliteStore::new("neo_session.db").await?)
+        .with_backend(SqliteStore::new(&config.neo_session).await?)
         .with_transport_factory(TokioWebSocketTransportFactory::new())
         .with_http_client(UreqHttpClient::new())
         .with_runtime(TokioRuntime)
-        .on_event(|event, client| async move {
-            handler::on_event(event, client).await;
+        .on_event(move |event, client| {
+            let store = store.clone();
+            async move {
+                handler::on_event(event, client, &store).await;
+            }
         })
         .build()
         .await?;
