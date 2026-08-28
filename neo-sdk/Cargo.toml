@@ -8,3 +8,5 @@ description = "Command framework and config for Neo plugins"
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 toml = "1"
+wacore = { version = "0.7", default-features = false }
+whatsapp-rust = { version = "0.7", default-features = false }
