@@ -1,6 +1,6 @@
 mod handler;
 
-use neo_sdk::ConfigStore;
+use neo_sdk::config::ConfigStore;
 use std::sync::Arc;
 
 use tracing_subscriber::EnvFilter;

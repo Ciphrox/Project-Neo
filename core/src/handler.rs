@@ -1,4 +1,4 @@
-use neo_sdk::ConfigStore;
+use neo_sdk::config::ConfigStore;
 use neo_sdk::message::text_content;
 use qrcode::render::unicode::Dense1x2;
 use std::sync::Arc;
