@@ -10,4 +10,21 @@ path = "src/main.rs"
 
 [dependencies]
 neo-sdk = { path = "../neo-sdk" }
-plugins = { path = "../plugins" }
+whatsapp-rust = { version = "0.7", default-features = false, features = [
+  "simd",
+  "sqlite-storage",
+  "tokio-transport",
+  "tokio-runtime",
+  "ureq-client",
+  "tokio-native",
+  "signal",
+] }
+whatsapp-rust-tokio-transport = "0.7"
+whatsapp-rust-ureq-http-client = "0.7"
+wacore = { version = "0.7", default-features = false }
+wacore-binary = { version = "0.7", default-features = false }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow = "1"
+qrcode = "0.14"
