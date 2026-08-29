@@ -16,7 +16,7 @@ fn main() {
     );
     for n in &names {
         code.push_str(&format!(
-            "    plugin_{}::register(r);\n",
+            "    r.plugin(\"{n}\", plugin_{}::register);\n",
             n.replace('-', "_")
         ));
     }

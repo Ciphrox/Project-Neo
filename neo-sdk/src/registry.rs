@@ -8,12 +8,14 @@ use tracing::warn;
 
 pub struct Registry {
     commands: Vec<RegisteredCommand>,
+    current_plugin: &'static str,
     config: Arc<Config>,
 }
 
 pub struct RegisteredCommand {
     command: &'static Command,
     regex: Regex,
+    plugin: &'static str,
 }
 
 pub struct Match<'s> {
@@ -25,8 +27,14 @@ impl Registry {
     pub fn new(config: Arc<Config>) -> Self {
         Self {
             commands: Vec::new(),
+            current_plugin: "",
             config,
         }
+    }
+
+    pub fn plugin(&mut self, name: &'static str, register: fn(&mut Self)) {
+        self.current_plugin = name;
+        register(self);
     }
 
     pub fn add(&mut self, cmd: &'static Command) {
@@ -54,6 +62,7 @@ impl Registry {
         self.commands.push(RegisteredCommand {
             command: cmd,
             regex,
+            plugin: self.current_plugin,
         });
 
         tracing::info!("Registered command: {name}");
@@ -115,6 +124,9 @@ fn to_match(caps: &Captures<'_>) -> RegexMatch {
 impl RegisteredCommand {
     pub fn meta(&self) -> &'static Command {
         self.command
+    }
+    pub fn plugin(&self) -> &'static str {
+        self.plugin
     }
     pub async fn run(&self, ctx: CommandContext) -> anyhow::Result<()> {
         (self.command.run)(ctx).await
