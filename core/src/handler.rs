@@ -1,9 +1,9 @@
-use neo_sdk::ConfigStore;
+use neo_sdk::config::ConfigStore;
+use neo_sdk::message::text_content;
 use qrcode::render::unicode::Dense1x2;
 use std::sync::Arc;
 use tracing::{error, info, warn};
 
-use wacore::proto_helpers::MessageExt;
 use wacore::types::{events::Event, message::MessageInfo};
 use wacore_binary::jid::JidExt;
 use whatsapp_rust::Client;
@@ -52,19 +52,4 @@ fn on_message(msg: &Arc<wa::Message>, info: &MessageInfo, store: &Arc<ConfigStor
         "DM"
     };
     info!("[{tag}] {}: {text}", info.source.sender);
-}
-
-fn text_content(msg: &wa::Message) -> Option<String> {
-    let base = msg.get_base_message();
-    if let Some(text) = &base.conversation
-        && !text.is_empty()
-    {
-        return Some(text.clone());
-    }
-    if let Some(ext) = base.extended_text_message.as_option()
-        && let Some(text) = &ext.text
-    {
-        return Some(text.clone());
-    }
-    None
 }
