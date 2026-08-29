@@ -8,3 +8,4 @@ description = "Links all plugin crates and exposes register_all"
 path = "lib.rs"
 
 [dependencies]
+neo-sdk = { path = "../neo-sdk" }

@@ -21,6 +21,10 @@ async fn main() -> anyhow::Result<()> {
     let store = Arc::new(ConfigStore::load()?);
     let config = store.snapshot();
 
+    let mut registry = neo_sdk::registry::Registry::new(config.clone());
+    plugins::register_all(&mut registry);
+    let registry = Arc::new(registry);
+
     tracing::info!("Starting {}", config.bot_name);
     let bot = Bot::builder()
         .with_backend(SqliteStore::new(&config.neo_session).await?)
@@ -29,8 +33,9 @@ async fn main() -> anyhow::Result<()> {
         .with_runtime(TokioRuntime)
         .on_event(move |event, client| {
             let store = store.clone();
+            let registry = registry.clone();
             async move {
-                handler::on_event(event, client, &store).await;
+                handler::on_event(event, client, &store, &registry).await;
             }
         })
         .build()
