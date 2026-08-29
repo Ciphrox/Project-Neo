@@ -1,9 +1,11 @@
 use crate::config::Config;
 use crate::message::MessageType;
+use crate::registry::Registry;
 
 use std::future::Future;
 use std::pin::Pin;
 use std::sync::Arc;
+use std::time::Instant;
 
 use whatsapp_rust::Client;
 use whatsapp_rust::Jid;
@@ -106,6 +108,8 @@ impl Command {
 
 pub struct CommandContext {
     pub client: Arc<Client>,
+    pub config: Arc<Config>,
+    pub registry: Arc<Registry>,
     pub chat_jid: Jid,
     pub sender_jid: Jid,
     pub is_from_me: bool,
@@ -114,5 +118,6 @@ pub struct CommandContext {
     pub text: String,
     pub matches: Vec<RegexMatch>,
     pub message: Arc<wa::Message>,
-    pub config: Arc<Config>,
+    pub message_key: wa::MessageKey,
+    pub received_at: Instant,
 }

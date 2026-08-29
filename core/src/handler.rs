@@ -5,6 +5,7 @@ use neo_sdk::types::{CommandContext, DispatchCtx};
 
 use qrcode::render::unicode::Dense1x2;
 use std::sync::Arc;
+use std::time::Instant;
 use tracing::{error, info, warn};
 
 use wacore::types::{events::Event, message::MessageInfo};
@@ -55,6 +56,7 @@ async fn on_message(
     registry: &Arc<Registry>,
 ) {
     let config = store.snapshot();
+    let received_at = Instant::now();
     let Some(text) = text_content(msg) else {
         return;
     };
@@ -90,6 +92,8 @@ async fn on_message(
 
     let ctx = CommandContext {
         client: client.clone(),
+        config,
+        registry: registry.clone(),
         chat_jid: chat.clone(),
         sender_jid: sender.clone(),
         is_from_me,
@@ -98,8 +102,15 @@ async fn on_message(
         text: text.clone(),
         matches: m.matches,
         message: Arc::clone(msg),
-        config: config.clone(),
+        message_key: wa::MessageKey {
+            remote_jid: Some(chat.to_string()),
+            from_me: Some(is_from_me),
+            id: Some(info.id.clone()),
+            participant: is_group.then(|| sender.to_string()),
+        },
+        received_at,
     };
+
     if let Err(e) = m.command.run(ctx).await {
         error!(command = m.command.meta().name, error = %e);
         let reply = wa::Message {
