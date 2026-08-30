@@ -8,9 +8,9 @@ use std::sync::Arc;
 use std::time::Instant;
 use tracing::{error, info, warn};
 
-use wacore::types::{events::Event, message::MessageInfo};
-use wacore_binary::jid::JidExt;
 use whatsapp_rust::Client;
+use whatsapp_rust::wacore::types::{events::Event, message::MessageInfo};
+use whatsapp_rust::wacore_binary::jid::JidExt;
 use whatsapp_rust::waproto::whatsapp as wa;
 
 pub async fn on_event(

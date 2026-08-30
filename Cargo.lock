@@ -967,8 +967,6 @@ dependencies = [
  "serde",
  "toml 1.1.4+spec-1.1.0",
  "tracing",
- "wacore",
- "wacore-binary",
  "whatsapp-rust",
 ]
 
@@ -1119,11 +1117,7 @@ dependencies = [
  "tokio",
  "tracing",
  "tracing-subscriber",
- "wacore",
- "wacore-binary",
  "whatsapp-rust",
- "whatsapp-rust-tokio-transport",
- "whatsapp-rust-ureq-http-client",
 ]
 
 [[package]]

@@ -6,9 +6,9 @@ use std::sync::Arc;
 use tracing_subscriber::EnvFilter;
 use whatsapp_rust::TokioRuntime;
 use whatsapp_rust::bot::Bot;
+use whatsapp_rust::http::UreqHttpClient;
 use whatsapp_rust::store::SqliteStore;
-use whatsapp_rust_tokio_transport::TokioWebSocketTransportFactory;
-use whatsapp_rust_ureq_http_client::UreqHttpClient;
+use whatsapp_rust::transport::TokioWebSocketTransportFactory;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {

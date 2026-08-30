@@ -1,4 +1,4 @@
-use wacore::proto_helpers::MessageExt;
+use whatsapp_rust::wacore::proto_helpers::MessageExt;
 use whatsapp_rust::waproto::whatsapp::Message;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

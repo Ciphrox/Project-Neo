@@ -10,6 +10,4 @@ regex = "1"
 serde = { version = "1", features = ["derive"] }
 toml = "1"
 tracing = "0.1"
-wacore = { version = "0.7", default-features = false }
-wacore-binary = { version = "0.7", default-features = false }
 whatsapp-rust = { version = "0.7", default-features = false }
