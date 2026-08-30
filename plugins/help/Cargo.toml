@@ -1,0 +1,8 @@
+[package]
+name = "plugin-help"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+neo-sdk = { path = "../../neo-sdk" }
+anyhow = "1"

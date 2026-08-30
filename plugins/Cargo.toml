@@ -9,4 +9,5 @@ path = "lib.rs"
 
 [dependencies]
 neo-sdk = { path = "../neo-sdk" }
+plugin-help = { path = "help" }
 plugin-ping = { path = "ping" }
