@@ -1,0 +1,28 @@
+[package]
+name = "project-neo"
+version = "0.1.0"
+edition = "2024"
+license = "GPL-3.0-only"
+description = "A WhatsApp bot written in Rust"
+
+[[bin]]
+name = "project-neo"
+path = "src/main.rs"
+
+[dependencies]
+neo-sdk = { path = "../neo-sdk" }
+plugins = { path = "../plugins" }
+whatsapp-rust = { version = "0.7", default-features = false, features = [
+  "simd",
+  "sqlite-storage",
+  "tokio-transport",
+  "tokio-runtime",
+  "ureq-client",
+  "tokio-native",
+  "signal",
+] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow = "1"
+qrcode = "0.14"

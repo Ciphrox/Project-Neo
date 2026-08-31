@@ -1,0 +1,3 @@
+[workspace]
+members = ["core", "neo-sdk", "plugins", "plugins/*"]
+resolver = "3"

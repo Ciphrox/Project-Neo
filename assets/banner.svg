@@ -1,0 +1,262 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="390" viewBox="0 0 1200 390" font-family="'DejaVu Sans', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#080d12"/>
+      <stop offset="1" stop-color="#0c141b"/>
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#cfe0d6"/>
+      <stop offset="0.55" stop-color="#a5d2b8"/>
+      <stop offset="1" stop-color="#5cc98e"/>
+    </linearGradient>
+    <radialGradient id="glowG" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#25d366" stop-opacity="0.15"/>
+      <stop offset="0.35" stop-color="#25d366" stop-opacity="0.08"/>
+      <stop offset="0.7" stop-color="#25d366" stop-opacity="0.03"/>
+      <stop offset="1" stop-color="#25d366" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#53bdeb" stop-opacity="0.11"/>
+      <stop offset="0.35" stop-color="#53bdeb" stop-opacity="0.06"/>
+      <stop offset="0.7" stop-color="#53bdeb" stop-opacity="0.02"/>
+      <stop offset="1" stop-color="#53bdeb" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="13" cy="13" r="1.4" fill="#20303c"/>
+    </pattern>
+    <filter id="softBlur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+    <filter id="bubShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <clipPath id="frame"><rect x="11" y="11" width="1178" height="368" rx="14"/></clipPath>
+    <clipPath id="typePing"><rect x="610" y="298" width="0" height="20">
+      <animate attributeName="width" values="0;6.6;13.2;19.8;26.4;33;33;0;0" calcMode="discrete" keyTimes="0;0.10;0.112;0.124;0.136;0.148;0.17;0.175;1" dur="6s" repeatCount="1" fill="freeze"/>
+    </rect></clipPath>
+    <clipPath id="typeCalc"><rect x="610" y="298" width="0" height="20">
+      <animate attributeName="width" values="0;6.6;13.2;19.8;26.4;33;39.6;46.2;52.8;59.4;66;72.6;79.2;85.8;92.4;99;105.6;112.2;112.2;0;0" calcMode="discrete" keyTimes="0;0.46;0.478;0.496;0.514;0.532;0.55;0.568;0.586;0.604;0.622;0.64;0.658;0.676;0.694;0.712;0.73;0.748;0.77;0.775;1" dur="6s" repeatCount="1" fill="freeze"/>
+    </rect></clipPath>
+    <clipPath id="typeCargo"><rect x="79.6" y="315" width="70.2" height="18">
+      <animate attributeName="width" values="0;7.8;15.7;23.5;31.3;39.2;47;54.8;62.7;70.2" calcMode="discrete" keyTimes="0;0.45;0.464;0.477;0.491;0.505;0.518;0.532;0.545;0.559" dur="6s" repeatCount="1" fill="freeze"/>
+    </rect></clipPath>
+  </defs>
+
+  <rect width="1200" height="390" rx="18" fill="url(#bg)"/>
+  <g clip-path="url(#frame)">
+    <rect x="11" y="11" width="1178" height="368" fill="url(#dots)"/>
+    <circle cx="980" cy="70" r="260" fill="url(#glowG)"/>
+    <circle cx="700" cy="380" r="220" fill="url(#glowB)"/>
+    <circle cx="120" cy="40" r="170" fill="url(#glowG)"/>
+    <circle cx="1180" cy="340" r="150" fill="url(#glowB)"/>
+  </g>
+
+  <!-- hairline frame -->
+  <rect x="10.5" y="10.5" width="1179" height="369" rx="14" fill="none" stroke="#1c2833"/>
+
+  <!-- ===== left column ===== -->
+  <text x="64" y="86" font-family="'DejaVu Sans Mono', monospace" font-size="11" fill="#4d6472" letter-spacing="4">// PROJECT
+    <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.08;1" calcMode="spline" keySplines="0.3 0 0.2 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+  </text>
+
+  <text x="60" y="168" font-size="96" font-weight="bold" fill="url(#titleGrad)" letter-spacing="6">NEO
+    <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.12;1" calcMode="spline" keySplines="0.3 0 0.2 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+  </text>
+
+  <g>
+    <rect x="64" y="196" width="72" height="4" rx="2" fill="#25d366">
+      <animate attributeName="width" values="0;0;72;72" keyTimes="0;0.14;0.21;1" calcMode="spline" keySplines="0 0 1 1;0.2 0.8 0.3 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+    </rect>
+    <rect x="144" y="196" width="24" height="4" rx="2" fill="#53bdeb" opacity="0.7">
+      <animate attributeName="width" values="0;0;24;24" keyTimes="0;0.21;0.26;1" calcMode="spline" keySplines="0 0 1 1;0.2 0.8 0.3 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+    </rect>
+    <circle cx="186" cy="198" r="2.5" fill="#25d366">
+      <animate attributeName="r" values="0;0;2.5;2.5" keyTimes="0;0.26;0.30;1" calcMode="spline" keySplines="0 0 1 1;0.2 0.8 0.3 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+    </circle>
+  </g>
+
+  <text x="64" y="240" font-family="'DejaVu Sans Mono', monospace" font-size="15" fill="#9db0bc">whatsapp userbot <tspan fill="#25d366">·</tspan> rust
+    <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.16;0.26;1" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+  </text>
+
+  <!-- pills -->
+  <g font-family="'DejaVu Sans Mono', monospace" font-size="11">
+    <g>
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.20;0.30;1" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+      <rect x="63.5" y="258.5" width="116" height="27" rx="13.5" fill="#0e161d" stroke="#2a3a47"/>
+      <circle cx="79" cy="272" r="2.5" fill="#25d366"/>
+      <text x="88" y="276" fill="#9db0bc">blazing fast</text>
+    </g>
+    <g>
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.26;0.36;1" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+      <rect x="189.5" y="258.5" width="156" height="27" rx="13.5" fill="#0e161d" stroke="#2a3a47"/>
+      <circle cx="205" cy="272" r="2.5" fill="#53bdeb"/>
+      <text x="214" y="276" fill="#9db0bc">expandable plugins</text>
+    </g>
+    <g>
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.32;0.42;1" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+      <rect x="355.5" y="258.5" width="123" height="27" rx="13.5" fill="#0e161d" stroke="#2a3a47"/>
+      <circle cx="371" cy="272" r="2.5" fill="#e2a541"/>
+      <text x="380" y="276" fill="#9db0bc">single binary</text>
+    </g>
+  </g>
+
+  <!-- cargo run: $ static, command typed -->
+  <g font-family="'DejaVu Sans Mono', monospace" font-size="13">
+    <text x="64" y="330" fill="#25d366">$
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.40;0.44;1" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+    </text>
+    <text x="79.6" y="330" fill="#8ca79b" clip-path="url(#typeCargo)">cargo run</text>
+    <rect x="149.8" y="319" width="8" height="14" rx="1" fill="#25d366" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.40;0.44;1" dur="6s" repeatCount="1" fill="freeze"/>
+      <animate attributeName="x" values="79.6;79.6;87.4;87.4;95.2;95.2;103;103;110.8;110.8;118.6;118.6;126.4;126.4;134.2;134.2;142;142;149.8;149.8" keyTimes="0;0.45;0.455;0.4635;0.4685;0.477;0.482;0.4905;0.4955;0.504;0.509;0.5175;0.5225;0.531;0.536;0.5445;0.5495;0.558;0.563;1" dur="6s" repeatCount="1" fill="freeze"/>
+      <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.5;0.5;1" dur="1.1s" begin="3.5s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- ===== chat card ===== -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0 14;0 14;0 0;0 0" keyTimes="0;0.03;0.16;1" calcMode="spline" keySplines="0 0 1 1;0.16 1 0.3 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+    <rect x="568" y="62" width="576" height="300" rx="18" fill="#000" opacity="0.55" filter="url(#softBlur)"/>
+    <rect x="560" y="46" width="576" height="300" rx="18" fill="#101a21" stroke="#263642" stroke-width="1.2"/>
+    <path d="M560 64 a18 18 0 0 1 18 -18 h540 a18 18 0 0 1 18 18 v26 h-576 z" fill="#151f28"/>
+    <line x1="560" y1="90" x2="1136" y2="90" stroke="#22303c"/>
+    <circle cx="590" cy="68" r="13" fill="#152a22"/>
+    <text x="585.5" y="73" font-size="12" font-weight="bold" fill="#8fd0ae">N</text>
+    <text x="612" y="65" font-size="13" font-weight="bold" fill="#e9edf0">Neo</text>
+    <text x="612" y="81" font-family="'DejaVu Sans Mono', monospace" font-size="9" fill="#57c78f">online</text>
+    <text x="652" y="81" font-family="'DejaVu Sans Mono', monospace" font-size="9" fill="#57c78f" opacity="0">· typing...
+      <animate attributeName="opacity" values="0;0;1;1;0;0;1;1;0;0" keyTimes="0;0.24;0.25;0.39;0.40;0.83;0.84;0.91;0.92;1" dur="6s" repeatCount="1" fill="freeze"/>
+    </text>
+    <!-- video + call + kebab -->
+    <g transform="translate(1054,60) scale(0.66)">
+      <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" fill="#7e939f"/>
+    </g>
+    <g transform="translate(1082,60) scale(0.66)">
+      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="#7e939f"/>
+    </g>
+    <circle cx="1116" cy="62" r="1.8" fill="#7e939f"/>
+    <circle cx="1116" cy="68" r="1.8" fill="#7e939f"/>
+    <circle cx="1116" cy="74" r="1.8" fill="#7e939f"/>
+
+    <!-- .ping (sent) -->
+    <g>
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.18;0.21;1" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+      <animateTransform attributeName="transform" type="translate" values="0 8;0 8;0 0;0 0" keyTimes="0;0.18;0.23;1" calcMode="spline" keySplines="0 0 1 1;0.16 1 0.3 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+      <rect x="966" y="102" width="150" height="36" rx="11" fill="#000" opacity="0.25" filter="url(#bubShadow)"/>
+      <rect x="966" y="98" width="150" height="36" rx="11" fill="#055047"/>
+      <path d="M1106 98 L1124 98 L1106 112 Z" fill="#055047"/>
+      <text x="980" y="120" font-family="'DejaVu Sans Mono', monospace" font-size="13" fill="#e9edf0">.ping</text>
+      <path d="M1052 124 l3 3.5 l6.5 -7.5" stroke="#53bdeb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1058 124 l3 3.5 l6.5 -7.5" stroke="#53bdeb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="1072" y="129" font-family="'DejaVu Sans Mono', monospace" font-size="9" fill="#92c5af">21:17</text>
+    </g>
+
+    <!-- typing #1 -->
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.24;0.26;0.38;0.40;1" dur="6s" repeatCount="1" fill="freeze"/>
+      <rect x="580" y="140" width="64" height="32" rx="10" fill="#202d36"/>
+      <path d="M590 140 L572 140 L590 154 Z" fill="#202d36"/>
+      <circle cx="601" cy="156" r="3.2" fill="#8696a0">
+        <animate attributeName="cy" values="156;151;156" dur="0.7s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="614" cy="156" r="3.2" fill="#8696a0">
+        <animate attributeName="cy" values="156;151;156" dur="0.7s" begin="0.22s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="627" cy="156" r="3.2" fill="#8696a0">
+        <animate attributeName="cy" values="156;151;156" dur="0.7s" begin="0.44s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <!-- Pong (received) -->
+    <g>
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.40;0.43;1" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+      <animateTransform attributeName="transform" type="translate" values="0 8;0 8;0 0;0 0" keyTimes="0;0.40;0.45;1" calcMode="spline" keySplines="0 0 1 1;0.16 1 0.3 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+      <rect x="580" y="144" width="170" height="36" rx="11" fill="#000" opacity="0.25" filter="url(#bubShadow)"/>
+      <rect x="580" y="140" width="170" height="36" rx="11" fill="#202d36"/>
+      <path d="M590 140 L572 140 L590 154 Z" fill="#202d36"/>
+      <text x="594" y="162" font-family="'DejaVu Sans Mono', monospace" font-size="13" fill="#e9edf0">Pong in 42 ms</text>
+      <text x="714" y="171" font-family="'DejaVu Sans Mono', monospace" font-size="9" fill="#7e939f">21:17</text>
+    </g>
+
+    <!-- .calc (sent) -->
+    <g>
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.78;0.81;1" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+      <animateTransform attributeName="transform" type="translate" values="0 8;0 8;0 0;0 0" keyTimes="0;0.78;0.83;1" calcMode="spline" keySplines="0 0 1 1;0.16 1 0.3 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+      <rect x="879" y="186" width="237" height="36" rx="11" fill="#000" opacity="0.25" filter="url(#bubShadow)"/>
+      <rect x="879" y="182" width="237" height="36" rx="11" fill="#055047"/>
+      <path d="M1106 182 L1124 182 L1106 196 Z" fill="#055047"/>
+      <text x="893" y="204" font-family="'DejaVu Sans Mono', monospace" font-size="13" fill="#e9edf0">.calc 2^10 + 3*12</text>
+      <path d="M1052 208 l3 3.5 l6.5 -7.5" stroke="#53bdeb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M1058 208 l3 3.5 l6.5 -7.5" stroke="#53bdeb" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="1072" y="213" font-family="'DejaVu Sans Mono', monospace" font-size="9" fill="#92c5af">21:17</text>
+    </g>
+
+    <!-- typing #2 -->
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.83;0.85;0.91;0.92;1" dur="6s" repeatCount="1" fill="freeze"/>
+      <rect x="580" y="224" width="64" height="32" rx="10" fill="#202d36"/>
+      <path d="M590 224 L572 224 L590 238 Z" fill="#202d36"/>
+      <circle cx="601" cy="240" r="3.2" fill="#8696a0">
+        <animate attributeName="cy" values="240;235;240" dur="0.7s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="614" cy="240" r="3.2" fill="#8696a0">
+        <animate attributeName="cy" values="240;235;240" dur="0.7s" begin="0.22s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="627" cy="240" r="3.2" fill="#8696a0">
+        <animate attributeName="cy" values="240;235;240" dur="0.7s" begin="0.44s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <!-- calc reply (received) -->
+    <g>
+      <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.92;0.95;1" calcMode="spline" keySplines="0 0 1 1;0.3 0 0.2 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+      <animateTransform attributeName="transform" type="translate" values="0 8;0 8;0 0;0 0" keyTimes="0;0.92;0.97;1" calcMode="spline" keySplines="0 0 1 1;0.16 1 0.3 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+      <rect x="580" y="228" width="120" height="36" rx="11" fill="#000" opacity="0.25" filter="url(#bubShadow)"/>
+      <rect x="580" y="224" width="120" height="36" rx="11" fill="#202d36"/>
+      <path d="M590 224 L572 224 L590 238 Z" fill="#202d36"/>
+      <text x="594" y="246" font-family="'DejaVu Sans Mono', monospace" font-size="13" fill="#e9edf0">= 1060</text>
+      <text x="660" y="255" font-family="'DejaVu Sans Mono', monospace" font-size="9" fill="#7e939f">21:17</text>
+    </g>
+
+    <!-- input pill + separate send button -->
+    <rect x="580" y="292" width="496" height="36" rx="18" fill="#18242c" stroke="#263642"/>
+    <!-- emoji icon (left) -->
+    <g stroke="#566c79" stroke-width="1.2" fill="none">
+      <circle cx="596" cy="310" r="6"/>
+      <circle cx="593.8" cy="308.5" r="0.7" fill="#566c79" stroke="none"/>
+      <circle cx="598.2" cy="308.5" r="0.7" fill="#566c79" stroke="none"/>
+      <path d="M593.3 311.8 q2.7 2.4 5.4 0"/>
+    </g>
+    <text x="610" y="314" font-family="'DejaVu Sans Mono', monospace" font-size="10" fill="#566c79">Message
+      <animate attributeName="opacity" values="1;1;0;0;1;1;0;0;1" keyTimes="0;0.10;0.105;0.175;0.18;0.46;0.465;0.775;1" dur="6s" repeatCount="1" fill="freeze"/>
+    </text>
+    <!-- typed text in input -->
+    <text x="610" y="314" font-family="'DejaVu Sans Mono', monospace" font-size="11" fill="#dfe6ea" clip-path="url(#typePing)">.ping</text>
+    <text x="610" y="314" font-family="'DejaVu Sans Mono', monospace" font-size="11" fill="#dfe6ea" clip-path="url(#typeCalc)">.calc 2^10 + 3*12</text>
+    <rect x="610" y="302" width="1.6" height="16" fill="#25d366" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0;1;1;0" keyTimes="0;0.10;0.105;0.175;0.18;0.46;0.465;0.775;1" dur="6s" repeatCount="1" fill="freeze"/>
+      <animate attributeName="x" values="610;610;616.6;616.6;623.2;623.2;629.8;629.8;636.4;636.4;643;643;610;610;616.6;616.6;623.2;623.2;629.8;629.8;636.4;636.4;643;643;649.6;649.6;656.2;656.2;662.8;662.8;669.4;669.4;676;676;682.6;682.6;689.2;689.2;695.8;695.8;702.4;702.4;709;709;715.6;715.6;722.2;722.2;610;610" keyTimes="0;0.1;0.105;0.112;0.117;0.124;0.129;0.136;0.141;0.148;0.153;0.175;0.18;0.46;0.466;0.478;0.484;0.496;0.502;0.514;0.52;0.532;0.538;0.55;0.556;0.568;0.574;0.586;0.592;0.604;0.61;0.622;0.628;0.64;0.646;0.658;0.664;0.676;0.682;0.694;0.7;0.712;0.718;0.73;0.736;0.748;0.754;0.775;0.78;1" dur="6s" repeatCount="1" fill="freeze"/>
+    </rect>
+    <!-- clip icon (upright, matched to camera: 12 tall, same centerline) -->
+    <g transform="translate(1035,306.1) scale(1,0.92)" stroke="#566c79" stroke-width="1.2" fill="none">
+      <path d="M2 0 v8.2 a2.6 2.6 0 0 0 5.2 0 v-8 a1.7 1.7 0 0 0 -3.4 0 v7.5"/>
+    </g>
+    <!-- camera icon (12 tall, same center) -->
+    <g stroke="#566c79" stroke-width="1.2" fill="none">
+      <rect x="1053" y="306" width="13" height="10" rx="2"/>
+      <path d="M1057 306 l1.2 -2 h3.6 l1.2 2"/>
+      <circle cx="1059.5" cy="311" r="2.6"/>
+    </g>
+    <!-- send button: scales + darkens on press -->
+    <g transform="translate(1096,310)">
+      <g>
+        <animateTransform attributeName="transform" type="scale" values="1;1;0.8;1;1;0.8;1;1" keyTimes="0;0.175;0.18;0.22;0.775;0.78;0.82;1" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.6 1;0.2 0.8 0.3 1;0 0 1 1;0.4 0 0.6 1;0.2 0.8 0.3 1;0 0 1 1" dur="6s" repeatCount="1" fill="freeze"/>
+        <circle r="16" fill="#25d366">
+          <animate attributeName="fill" values="#25d366;#25d366;#128C4A;#25d366;#25d366;#128C4A;#25d366;#25d366" keyTimes="0;0.175;0.18;0.22;0.775;0.78;0.82;1" dur="6s" repeatCount="1" fill="freeze"/>
+        </circle>
+        <path d="M-7.8 6 L9.6 0 L-7.8 -6 L-7.8 -1.4 L-2.4 0 L-7.8 1.4 Z" fill="#0a1410"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+{
+  // GitHub README conventions vs markdownlint defaults:
+  "config": {
+    // line length: table rows with <br> can't wrap, 80 is for prose files
+    "MD013": false,
+    // inline HTML: <div align="center"> banner and <br> inside table cells
+    "MD033": false,
+    // first line is the banner image, not an H1
+    "MD041": false,
+    // table style is owned by prettier (aligned columns), not this rule
+    "MD060": false
+  }
+}
